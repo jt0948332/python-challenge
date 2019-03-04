@@ -38,11 +38,28 @@ with open(BudgetData) as csv_file:
         #  Calculate Total
         net_profit += current_value
 
-print(net_profit)
-print(row_count)
-print((sum(change_list))/len(change_list))
-print(min(change_list))
-print(max_change_month)
-print(max_change)
-print(min_change_month)
-print(min_change)
+average_change = round(((sum(change_list))/len(change_list)), 2)
+#print everything out
+print("Financial Analysis")
+print("--------------------------------------------")
+print(f"Total Months: {row_count}")
+print(f"Total: ${net_profit}")
+print(f"Average Change: $ {average_change}")
+print(f"Greatest Increase in Profits: {max_change_month} (${max_change})")
+print(f"Greatest Decrease in Profits: {min_change_month} (${min_change})")
+
+#Write to file
+output_path = os.path.join("Resources", "output.csv")
+# Open the file using "write" mode. Specify the variable to hold the contents
+with open(output_path, 'w', newline='') as csvfile:
+
+    # Initialize csv.writer
+    csvwriter = csv.writer(csvfile, delimiter=',')
+
+    # Write the first row (column headers)
+    csvwriter.writerow(['Total Months', 'Total', 'Average Change','Greatest increase in Profits', 'Greatest Decrease in Profits'])
+
+
+    # Write the second row
+    csvwriter.writerow([row_count, net_profit, average_change, max_change_month + " $" +  str(max_change), min_change_month + " $" + str(min_change)])
+#print(f"Total Months: {row_count} received {tally_percent} % ({tally_count})")
